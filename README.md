@@ -13,12 +13,5 @@ The package provides message storage backend based on PHP arrays to be used with
 [![Build Status](https://travis-ci.org/yiisoft/i18n-message-php.svg?branch=master)](https://travis-ci.org/yiisoft/i18n-message-php)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/i18n-message-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/i18n-message-php/?branch=master)
 
-## Features
-
-- Message translation.
-- Multiple message storage types.
-- Message formatting. 
-- Multiple formatters.
-
 ## General usage
 
