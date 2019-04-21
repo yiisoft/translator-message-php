@@ -1,8 +1,8 @@
 <?php
-namespace Yii\I18n\Resource;
+namespace Yiisoft\I18n\Resource;
 
-use Yii\I18n\MessageReader;
-use Yii\I18n\MessageWriter;
+use Yiisoft\I18n\MessageReader;
+use Yiisoft\I18n\MessageWriter;
 
 class PhpFile implements MessageReader, MessageWriter
 {
