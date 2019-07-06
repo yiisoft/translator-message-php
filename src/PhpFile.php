@@ -1,10 +1,10 @@
 <?php
 namespace Yiisoft\I18n\Resource;
 
-use Yiisoft\I18n\MessageReader;
-use Yiisoft\I18n\MessageWriter;
+use Yiisoft\I18n\MessageReaderInterface;
+use Yiisoft\I18n\MessageWriterInterface;
 
-class PhpFile implements MessageReader, MessageWriter
+class PhpFile implements MessageReaderInterface, MessageWriterInterface
 {
     private $path;
     private $messages;
