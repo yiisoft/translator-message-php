@@ -2,7 +2,12 @@
     "name": "yiisoft/i18n-message-php",
     "type": "library",
     "description": "Yii i18n PHP message storage",
-    "keywords": ["i18n", "internationalization", "formatting", "message storage"],
+    "keywords": [
+        "i18n",
+        "internationalization",
+        "formatting",
+        "message storage"
+    ],
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
@@ -33,5 +38,8 @@
         "branch-alias": {
             "dev-master": "3.0.x-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }
