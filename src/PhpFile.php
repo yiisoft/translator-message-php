@@ -1,4 +1,5 @@
 <?php
+
 namespace Yiisoft\I18n\Resource;
 
 use Yiisoft\I18n\MessageReaderInterface;
