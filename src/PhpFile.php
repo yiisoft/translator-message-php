@@ -1,6 +1,6 @@
 <?php
 
-namespace Yiisoft\I18n\Resource;
+namespace Yiisoft\I18n;
 
 use Yiisoft\I18n\MessageReaderInterface;
 use Yiisoft\I18n\MessageWriterInterface;
