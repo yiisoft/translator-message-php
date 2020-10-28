@@ -26,9 +26,13 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $this->messages[$category][$locale][$id] ?? null;
     }
 
-    private function getFilePath(string $category, string $locale): ?string
+    private function getFilePath(string $category, string $locale, bool $withCreateDir = false): ?string
     {
-        $filePath = $this->path . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . $category . '.php';
+        $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
+        if ($withCreateDir && !file_exists($filePath)) {
+            mkdir($filePath, 0775, true);
+        }
+        $filePath .= DIRECTORY_SEPARATOR . $category . '.php';
 
         return $filePath;
     }
@@ -54,7 +58,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
     {
         $content = $this->generateMessageString($messages);
 
-        $path = $this->getFilePath($category, $locale);
+        $path = $this->getFilePath($category, $locale, true);
 
         if (file_put_contents($path, $content, LOCK_EX) === false) {
             throw new \RuntimeException('Can not write to ' . $path);
@@ -78,20 +82,17 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
     private function arrayToCode($array, $level = 0)
     {
         $code = '[';
-
-        $keys = array_keys($array);
-        $outputKeys = ($keys !== range(0, count($array) - 1));
-        $spaces = str_repeat(' ', $level * 4);
-        foreach ($keys as $key) {
-            $code .= "\n" . $spaces . '    ';
-            if ($outputKeys) {
-                $code .= $this->arrayToCode($key, 0);
-                $code .= ' => ';
+        foreach ($array as $key => $value) {
+            $code .= "\n" . '    ';
+            $code .= "'{$key}'";
+            $code .= ' => ';
+            if (!is_string($value)) {
+                throw new \RuntimeException('Value is not a string');
             }
-            $code .= $this->arrayToCode($array[$key], $level + 1);
+            $code .= "'{$value}'";
             $code .= ',';
         }
-        $code .= "\n" . $spaces . ']';
+        $code .= "\n" . ']';
         return $code;
     }
 }
