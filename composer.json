@@ -1,7 +1,7 @@
 {
-    "name": "yiisoft/i18n-message-php",
+    "name": "yiisoft/translator-message-php",
     "type": "library",
-    "description": "Yii i18n PHP message storage",
+    "description": "Yii PHP message storage",
     "keywords": [
         "i18n",
         "internationalization",
@@ -11,15 +11,15 @@
     "homepage": "http://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/i18n/issues?state=open",
+        "issues": "https://github.com/yiisoft/translator-message-php/issues?state=open",
         "forum": "http://www.yiiframework.com/forum/",
         "wiki": "http://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/i18n"
+        "source": "https://github.com/yiisoft/translator-message-php"
     },
     "require": {
         "php": "^7.4|^8.0",
-        "yiisoft/i18n": "3.0.x-dev"
+        "yiisoft/translator": "3.0.x-dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.3",
@@ -27,12 +27,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\I18n\\Message\\": "src"
+            "Yiisoft\\Translator\\Message\\Php\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\I18n\\Tests\\": "tests"
+            "Yiisoft\\Translator\\Message\\Php\\Tests\\": "tests"
         }
     },
     "extra": {
