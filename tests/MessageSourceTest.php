@@ -48,7 +48,33 @@ final class MessageSourceTest extends TestCase
             $this->assertEquals($messageSource->getMessage($id, $category, $language), $value);
         }
 
-        // clean after test
+        $this->cleanFiles();
+    }
+
+    public function testMultiWrite(): void
+    {
+        $allData = $this->generateTranslationsData();
+
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid();
+        $messageSource = new MessageSource($this->path);
+
+        foreach ($allData as $fileData) {
+            list($category, $language, $data) = $fileData;
+            $messageSource->write($category, $language, $data);
+        }
+
+        foreach ($allData as $fileData) {
+            list($category, $language, $data) = $fileData;
+            foreach ($data as $id=>$value) {
+                $this->assertEquals($messageSource->getMessage($id, $category, $language), $value);
+            }
+        }
+
+        $this->cleanFiles();
+    }
+
+    private function cleanFiles(): void
+    {
         if (file_exists($this->path)) {
             static::rmdir_recursive($this->path);
         }
