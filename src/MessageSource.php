@@ -9,8 +9,8 @@ use Yiisoft\Translator\MessageWriterInterface;
 
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
 {
-    private $path;
-    private $messages;
+    private string $path;
+    private array $messages;
 
     public function __construct(string $path)
     {
@@ -79,7 +79,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $content;
     }
 
-    private function arrayToCode($array, $level = 0)
+    private function arrayToCode(array $array): string
     {
         $code = '[';
         foreach ($array as $key => $value) {
