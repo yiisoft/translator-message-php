@@ -29,8 +29,8 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
     private function getFilePath(string $category, string $locale, bool $withCreateDir = false): ?string
     {
         $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
-        if ($withCreateDir && !file_exists($filePath)) {
-            mkdir($filePath, 0775, true);
+        if ($withCreateDir && !file_exists($filePath) && !mkdir($filePath, 0775, true) && !is_dir($filePath)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $filePath));
         }
         $filePath .= DIRECTORY_SEPARATOR . $category . '.php';
 
