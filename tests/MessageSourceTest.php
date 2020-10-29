@@ -6,7 +6,6 @@ namespace Yiisoft\Translator\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Translator\Message\Php\MessageSource;
-use function PHPUnit\Framework\assertEquals;
 
 final class MessageSourceTest extends TestCase
 {
@@ -55,16 +54,16 @@ final class MessageSourceTest extends TestCase
     {
         $allData = $this->generateTranslationsData();
 
-        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid();
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
         $messageSource = new MessageSource($this->path);
 
         foreach ($allData as $fileData) {
-            list($category, $language, $data) = $fileData;
+            [$category, $language, $data] = $fileData;
             $messageSource->write($category, $language, $data);
         }
 
         foreach ($allData as $fileData) {
-            list($category, $language, $data) = $fileData;
+            [$category, $language, $data] = $fileData;
             foreach ($data as $id=>$value) {
                 $this->assertEquals($messageSource->getMessage($id, $category, $language), $value);
             }
