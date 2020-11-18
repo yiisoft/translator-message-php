@@ -22,7 +22,7 @@
         "yiisoft/translator": "3.0.x-dev"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.3",
+        "phpunit/phpunit": "^9.4",
         "phan/phan": "^3.0"
     },
     "autoload": {
