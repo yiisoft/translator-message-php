@@ -21,7 +21,7 @@ final class MessageSourceTest extends TestCase
                     'test.id1' => 'app: Test 1 on the (de)',
                     'test.id2' => 'app: Test 2 on the (de)',
                     'test.id3' => 'app: Test 3 on the (de)',
-                ]
+                ],
             ],
             [
                 'app',
@@ -29,7 +29,7 @@ final class MessageSourceTest extends TestCase
                 [
                     'test.id1' => 'app: Test 1 on the (de-DE)',
                     'test.id2' => 'app: Test 2 on the (de-DE)',
-                ]
+                ],
             ],
         ];
     }
@@ -64,7 +64,7 @@ final class MessageSourceTest extends TestCase
 
         foreach ($allData as $fileData) {
             [$category, $language, $data] = $fileData;
-            foreach ($data as $id=>$value) {
+            foreach ($data as $id => $value) {
                 $this->assertEquals($messageSource->getMessage($id, $category, $language), $value);
             }
         }
@@ -75,7 +75,7 @@ final class MessageSourceTest extends TestCase
     private function cleanFiles(): void
     {
         if (file_exists($this->path)) {
-            static::rmdir_recursive($this->path);
+            self::rmdir_recursive($this->path);
         }
     }
 
@@ -85,7 +85,7 @@ final class MessageSourceTest extends TestCase
         $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $file) {
             if ($file->isDir()) {
-                static::rmdir_recursive($file->getPathname());
+                self::rmdir_recursive($file->getPathname());
             } else {
                 unlink($file->getPathname());
             }
