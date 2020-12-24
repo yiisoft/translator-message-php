@@ -18,17 +18,28 @@ final class MessageSourceTest extends TestCase
                 'app',
                 'de',
                 [
-                    'test.id1' => 'app: Test 1 on the (de)',
-                    'test.id2' => 'app: Test 2 on the (de)',
-                    'test.id3' => 'app: Test 3 on the (de)',
+                    'test.id1' => [
+                        'message' => 'app: Test 1 on the (de)',
+                        'comment' => 'Translate wisely!',
+                    ],
+                    'test.id2' => [
+                        'message' => 'app: Test 2 on the (de)',
+                    ],
+                    'test.id3' => [
+                        'message' => 'app: Test 3 on the (de)',
+                    ],
                 ],
             ],
             [
                 'app',
                 'de-DE',
                 [
-                    'test.id1' => 'app: Test 1 on the (de-DE)',
-                    'test.id2' => 'app: Test 2 on the (de-DE)',
+                    'test.id1' => [
+                        'message' => 'app: Test 1 on the (de-DE)',
+                    ],
+                    'test.id2' => [
+                        'message' => 'app: Test 2 on the (de-DE)',
+                    ],
                 ],
             ],
         ];
@@ -44,7 +55,7 @@ final class MessageSourceTest extends TestCase
         $messageSource = new MessageSource($this->path);
         $messageSource->write($category, $language, $data);
         foreach ($data as $id => $value) {
-            $this->assertEquals($messageSource->getMessage($id, $category, $language), $value);
+            $this->assertEquals($messageSource->getMessage($id, $category, $language), $value['message']);
         }
 
         $this->cleanFiles();
@@ -65,7 +76,7 @@ final class MessageSourceTest extends TestCase
         foreach ($allData as $fileData) {
             [$category, $language, $data] = $fileData;
             foreach ($data as $id => $value) {
-                $this->assertEquals($messageSource->getMessage($id, $category, $language), $value);
+                $this->assertEquals($messageSource->getMessage($id, $category, $language), $value['message']);
             }
         }
 

@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Translator\Message\Php;
 
+use InvalidArgumentException;
 use Yiisoft\Translator\MessageReaderInterface;
 use Yiisoft\Translator\MessageWriterInterface;
+use function array_key_exists;
+use function is_string;
 
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
 {
@@ -56,7 +59,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
 
     public function write(string $category, string $locale, array $messages): void
     {
-        $content = $this->generateMessageString($messages);
+        $content = $this->generateMessagesFileContent($messages);
 
         $path = $this->getFilePath($category, $locale, true);
 
@@ -65,13 +68,13 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         }
     }
 
-    private function generateMessageString(array $messages): string
+    private function generateMessagesFileContent(array $messages): string
     {
         $content = "<?php\nreturn ";
         if (empty($messages)) {
             $content .= '[]';
         } else {
-            $content .= $this->arrayToCode($messages);
+            $content .= $this->messagesToCode($messages);
             $content .= ';';
         }
         $content .= "\n";
@@ -79,17 +82,30 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $content;
     }
 
-    private function arrayToCode(array $array): string
+    private function messagesToCode(array $messages): string
     {
         $code = '[';
-        foreach ($array as $key => $value) {
-            $code .= "\n" . '    ';
-            $code .= "'{$key}'";
-            $code .= ' => ';
-            if (!is_string($value)) {
-                throw new \RuntimeException('Value is not a string');
+        foreach ($messages as $messageId => $messageData) {
+            if (!array_key_exists('message', $messageData)) {
+                throw new InvalidArgumentException("Message is not valid for ID \"$messageId\". \"message\" key is missing.");
             }
-            $code .= "'{$value}'";
+
+            if (!is_string($messageData['message'])) {
+                throw new InvalidArgumentException("Message is not a string for ID \"$messageId\".");
+            }
+
+            if (array_key_exists('comment', $messageData)) {
+                if (!is_string($messageData['comment'])) {
+                    throw new InvalidArgumentException("Message comment is not a string for ID \"$messageId\".");
+                }
+
+                $code .= "\n" . '    /* ' . $messageData['comment'] . ' */';
+            }
+
+            $code .= "\n" . '    ';
+            $code .= "'{$messageId}'";
+            $code .= ' => ';
+            $code .= "'{$messageData['message']}'";
             $code .= ',';
         }
         $code .= "\n" . ']';
