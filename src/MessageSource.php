@@ -82,6 +82,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
 
     /**
      * @param MessageInterface[] $messages
+     *
      * @return string
      */
     private function generateMessagesFileContent(array $messages): string
@@ -100,6 +101,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
 
     /**
      * @param MessageInterface[] $messages
+     *
      * @return string
      */
     private function messagesToCode(array $messages): string
