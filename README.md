@@ -68,9 +68,9 @@ $messageSource->write($category, $language, $data);
 ```
 after write, in storage you will see:
 ```
-- path_to_your_storage
-    - de-DE
-        - messageCategory.php
+-- path_to_your_storage
+  -- de-DE
+    -- messageCategory.php
 ```
 
 ## Unit testing
