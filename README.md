@@ -19,32 +19,39 @@ The package provides message storage backend based on PHP arrays to be used with
 ## Installation
 
 The preferred way to install this package is through [Composer](https://getcomposer.org/download/):
+
 ```bash
 composer require yiisoft/translator-message-php
 ```
 
 ## General usage
 
-### Create of instance of MessageSource
+The package is meant to be used with [`yiisoft/translator`](https://github.com/yiisoft/translator). The examples below
+are about using it separately.
+
+### Create an instance of message source
+
 ```php
-/** @var string $path - path to your translate storage */
+/** @var string $path - path to your translations */
 $messageSource = new \Yiisoft\Translator\Message\Php\MessageSource($path);
 ```
 
-### Read message without `yiisoft/translator` package
+### Read a message without `yiisoft/translator` package
+
 ```php
 /** 
  * @var \Yiisoft\Translator\Message\Php\MessageSource $messageSource
  * @var ?string $translatedString
  */
-$id = 'messageIdentificator';
+$id = 'messageIdentifier';
 $category = 'messageCategory';
 $language = 'de-DE';
 
 $translatedString = $messageSource->getMessage($id, $category, $language);
 ```
 
-### Writing messages from array to storage
+### Write an array of messages to storage
+
 ```php
 /** 
  * @var \Yiisoft\Translator\Message\Php\MessageSource $messageSource
@@ -66,11 +73,13 @@ $data = [
 
 $messageSource->write($category, $language, $data);
 ```
-after write, in storage you will see:
+
+The following structure will be created after writing:
+
 ```
--- path_to_your_storage
-  -- de-DE
-    -- messageCategory.php
+📁 path_to_your_storage
+  📁 de-DE
+     🗎 messageCategory.php
 ```
 
 ## Unit testing
