@@ -2,9 +2,8 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-    <h1 align="center">Translator PHP message storage</h1>
-    <br>
 </p>
+<h1 align="center">Translator PHP message storage</h1>
 
 The package provides message storage backend based on PHP arrays to be used with `yiisoft/translator` package.
 
@@ -17,10 +16,73 @@ The package provides message storage backend based on PHP arrays to be used with
 [![static analysis](https://github.com/yiisoft/translator-message-php/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/translator-message-php/actions?query=workflow%3A%22static+analysis%22)
 [![type-coverage](https://shepherd.dev/github/yiisoft/translator-message-php/coverage.svg)](https://shepherd.dev/github/yiisoft/translator-message-php)
 
+## Installation
+
+The preferred way to install this package is through [Composer](https://getcomposer.org/download/):
+
+```bash
+composer require yiisoft/translator-message-php
+```
 
 ## General usage
 
-### Unit testing
+The package is meant to be used with [`yiisoft/translator`](https://github.com/yiisoft/translator). The examples below
+are about using it separately.
+
+### Create an instance of message source
+
+```php
+/** @var string $path - path to your translations */
+$messageSource = new \Yiisoft\Translator\Message\Php\MessageSource($path);
+```
+
+### Read a message without `yiisoft/translator` package
+
+```php
+/** 
+ * @var \Yiisoft\Translator\Message\Php\MessageSource $messageSource
+ * @var ?string $translatedString
+ */
+$id = 'messageIdentifier';
+$category = 'messageCategory';
+$language = 'de-DE';
+
+$translatedString = $messageSource->getMessage($id, $category, $language);
+```
+
+### Write an array of messages to storage
+
+```php
+/** 
+ * @var \Yiisoft\Translator\Message\Php\MessageSource $messageSource
+ */
+$category = 'messageCategory';
+$language = 'de-DE';
+$data = [
+    'test.id1' => [
+        'message' => 'Nachricht 1', // translated string
+        'comment' => 'Comment for message 1', // is optional parameter for save extra metadata
+    ],
+    'test.id2' => [
+        'message' => 'Nachricht 2',
+    ],
+    'test.id3' => [
+        'message' => 'Nachricht 3',
+    ],
+];
+
+$messageSource->write($category, $language, $data);
+```
+
+The following structure will be created after writing:
+
+```
+📁 path_to_your_storage
+  📁 de-DE
+     🗎 messageCategory.php
+```
+
+## Unit testing
 
 The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
