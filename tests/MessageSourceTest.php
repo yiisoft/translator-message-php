@@ -6,6 +6,7 @@ namespace Yiisoft\Translator\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Translator\Message\Php\MessageSource;
+use InvalidArgumentException;
 
 final class MessageSourceTest extends TestCase
 {
@@ -45,20 +46,65 @@ final class MessageSourceTest extends TestCase
         ];
     }
 
+    public function generateFailTranslationsData(): array
+    {
+        return [
+            [
+                'app',
+                'de',
+                [
+                    'test.id1' => [
+                    ],
+                ],
+            ],
+            [
+                'app',
+                'de-DE',
+                [
+                    'test.id1' => [
+                        'message' => 1,
+                    ],
+                ],
+            ],
+            [
+                'app',
+                'de-DE',
+                [
+                    'test.id1' => [
+                        'message' => '',
+                        'comment' => 1,
+                    ],
+                ],
+            ],
+        ];
+    }
+
     /**
      * @dataProvider generateTranslationsData
      */
-    public function testWrite(string $category, string $language, array $data): void
+    public function testWrite(string $category, string $locale, array $data): void
     {
         $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid();
 
         $messageSource = new MessageSource($this->path);
-        $messageSource->write($category, $language, $data);
+        $messageSource->write($category, $locale, $data);
         foreach ($data as $id => $value) {
-            $this->assertEquals($messageSource->getMessage($id, $category, $language), $value['message']);
+            $this->assertEquals($messageSource->getMessage($id, $category, $locale), $value['message']);
         }
 
         $this->cleanFiles();
+    }
+
+    /**
+     * @dataProvider generateFailTranslationsData
+     */
+    public function testWriteWithFailData(string $category, string $locale, array $data): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid();
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write($category, $locale, $data);
     }
 
     public function testMultiWrite(): void
@@ -69,16 +115,29 @@ final class MessageSourceTest extends TestCase
         $messageSource = new MessageSource($this->path);
 
         foreach ($allData as $fileData) {
-            [$category, $language, $data] = $fileData;
-            $messageSource->write($category, $language, $data);
+            [$category, $locale, $data] = $fileData;
+            $messageSource->write($category, $locale, $data);
         }
 
         foreach ($allData as $fileData) {
-            [$category, $language, $data] = $fileData;
+            [$category, $locale, $data] = $fileData;
             foreach ($data as $id => $value) {
-                $this->assertEquals($messageSource->getMessage($id, $category, $language), $value['message']);
+                $this->assertEquals($messageSource->getMessage($id, $category, $locale), $value['message']);
             }
         }
+
+        $this->cleanFiles();
+    }
+
+    public function testReadWithoutFiles(): void
+    {
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write('category', 'language', []);
+
+        $expectedContent = "<?php\nreturn []\n";
+        $this->assertEquals($expectedContent, file_get_contents($this->path . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . 'category.php'));
 
         $this->cleanFiles();
     }
