@@ -132,13 +132,13 @@ final class MessageSourceTest extends TestCase
     public function testReadWithoutFiles(): void
     {
         $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
-        mkdir($this->path, 0755, true);
+
         $messageSource = new MessageSource($this->path);
         $messageSource->write('category', 'language', []);
-        $expectedContent = '<?php
-return []
-';
+
+        $expectedContent = "<?php\nreturn []\n";
         $this->assertEquals($expectedContent, file_get_contents($this->path . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . 'category.php'));
+
         $this->cleanFiles();
     }
 
