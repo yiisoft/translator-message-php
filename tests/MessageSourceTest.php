@@ -141,6 +141,15 @@ final class MessageSourceTest extends TestCase
         $this->assertEquals($expectedContent, file_get_contents($this->path . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . 'category.php'));
     }
 
+    public function testReadWithoutFileSource(): void
+    {
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
+
+        $messageSource = new MessageSource($this->path);
+
+        $this->assertNull($messageSource->getMessage('test', 'category', 'locale'));
+    }
+
     public function testCannotCreateDirectory(): void
     {
         $locale = 'test_locale';
@@ -195,16 +204,13 @@ final class MessageSourceTest extends TestCase
             unlink($path);
             return;
         }
+
         $directoryIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
         $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $file) {
-            if ($file->isDir()) {
-                self::rmdir_recursive($file->getPathname());
-            } else {
-                chmod($file->getPathname(), 0666);
-                unlink($file->getPathname());
-            }
+            self::rmdir_recursive($file->getPathname());
         }
+
         chmod($path, 0775);
         rmdir($path);
     }
