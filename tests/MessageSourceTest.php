@@ -190,6 +190,11 @@ final class MessageSourceTest extends TestCase
 
     private static function rmdir_recursive(string $path): void
     {
+        if (is_file($path)) {
+            chmod($path, 0666);
+            unlink($path);
+            return;
+        }
         $directoryIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
         $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $file) {
