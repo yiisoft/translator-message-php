@@ -220,5 +220,4 @@ final class MessageSourceTest extends TestCase
     {
         restore_error_handler();
     }
-
 }
