@@ -157,8 +157,6 @@ final class MessageSourceTest extends TestCase
         $messageSource = new MessageSource($this->path);
         $messageSource->write('category', $locale, []);
 
-        chmod($this->path, 0775);
-
         $this->enableErrorHandling();
     }
 
@@ -181,9 +179,6 @@ final class MessageSourceTest extends TestCase
         $messageSource = new MessageSource($this->path);
         $messageSource->write('category', $locale, []);
 
-        chmod($this->path . DIRECTORY_SEPARATOR . $locale, 0775);
-        chmod($translationFile, 0666);
-
         $this->enableErrorHandling();
     }
 
@@ -202,9 +197,11 @@ final class MessageSourceTest extends TestCase
             if ($file->isDir()) {
                 self::rmdir_recursive($file->getPathname());
             } else {
+                chmod($file->getPathname(), 0666);
                 unlink($file->getPathname());
             }
         }
+        chmod($path, 0775);
         rmdir($path);
     }
 
@@ -212,7 +209,7 @@ final class MessageSourceTest extends TestCase
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($skippedErrno, $skippedErrstr) {
             // skip not needed warning, notice or errors
-            return (bool)($errno == $skippedErrno && strstr($errstr, $skippedErrstr));
+            return (bool)($errno == $skippedErrno && stristr($errstr, $skippedErrstr));
         });
     }
 
