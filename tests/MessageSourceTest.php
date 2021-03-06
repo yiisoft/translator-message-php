@@ -141,6 +141,15 @@ final class MessageSourceTest extends TestCase
         $this->assertEquals($expectedContent, file_get_contents($this->path . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . 'category.php'));
     }
 
+    public function testReadWithoutFileSource(): void
+    {
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
+
+        $messageSource = new MessageSource($this->path);
+
+        $this->assertNull($messageSource->getMessage('test', 'category', 'locale'));
+    }
+
     public function testCannotCreateDirectory(): void
     {
         $locale = 'test_locale';
