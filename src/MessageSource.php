@@ -13,7 +13,7 @@ use function is_string;
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
 {
     private string $path;
-    private array $messages;
+    private array $messages = [];
 
     public function __construct(string $path)
     {
@@ -29,7 +29,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $this->messages[$category][$locale][$id] ?? null;
     }
 
-    private function getFilePath(string $category, string $locale, bool $withCreateDir = false): ?string
+    private function getFilePath(string $category, string $locale, bool $withCreateDir = false): string
     {
         $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
         if ($withCreateDir && !file_exists($filePath) && !mkdir($filePath, 0775, true) && !is_dir($filePath)) {
