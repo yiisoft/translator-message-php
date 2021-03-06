@@ -195,16 +195,13 @@ final class MessageSourceTest extends TestCase
             unlink($path);
             return;
         }
+
         $directoryIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
         $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $file) {
-            if ($file->isDir()) {
-                self::rmdir_recursive($file->getPathname());
-            } else {
-                chmod($file->getPathname(), 0666);
-                unlink($file->getPathname());
-            }
+            self::rmdir_recursive($file->getPathname());
         }
+
         chmod($path, 0775);
         rmdir($path);
     }
