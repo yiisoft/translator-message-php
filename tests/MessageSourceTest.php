@@ -79,6 +79,11 @@ final class MessageSourceTest extends TestCase
         ];
     }
 
+    protected function tearDown(): void
+    {
+        $this->cleanFiles();
+    }
+
     /**
      * @dataProvider generateTranslationsData
      */
@@ -91,8 +96,6 @@ final class MessageSourceTest extends TestCase
         foreach ($data as $id => $value) {
             $this->assertEquals($messageSource->getMessage($id, $category, $locale), $value['message']);
         }
-
-        $this->cleanFiles();
     }
 
     /**
@@ -125,11 +128,9 @@ final class MessageSourceTest extends TestCase
                 $this->assertEquals($messageSource->getMessage($id, $category, $locale), $value['message']);
             }
         }
-
-        $this->cleanFiles();
     }
 
-    public function testReadWithoutFiles(): void
+    public function testReadWithEmptyTranslations(): void
     {
         $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
 
@@ -138,8 +139,46 @@ final class MessageSourceTest extends TestCase
 
         $expectedContent = "<?php\nreturn []\n";
         $this->assertEquals($expectedContent, file_get_contents($this->path . DIRECTORY_SEPARATOR . 'language' . DIRECTORY_SEPARATOR . 'category.php'));
+    }
 
-        $this->cleanFiles();
+    public function testCannotCreateDirectory(): void
+    {
+        $locale = 'test_locale';
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
+
+        $this->disableErrorHandling(2, 'mkdir(): ');
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Directory "' . $this->path . DIRECTORY_SEPARATOR . $locale . '" was not created');
+
+        file_put_contents($this->path, '');
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write('category', $locale, []);
+
+        $this->enableErrorHandling();
+    }
+
+    public function testCannotWriteToFile(): void
+    {
+        $locale = 'test_locale';
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
+        $translationFile = $this->path . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . 'category.php';
+
+        $this->disableErrorHandling(2, 'failed to open stream: Permission denied');
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Can not write to ' . $translationFile);
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write('category', $locale, []);
+
+        chmod($translationFile, 0444);
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write('category', $locale, []);
+
+        $this->enableErrorHandling();
     }
 
     private function cleanFiles(): void
@@ -151,15 +190,35 @@ final class MessageSourceTest extends TestCase
 
     private static function rmdir_recursive(string $path): void
     {
+        if (is_file($path)) {
+            chmod($path, 0666);
+            unlink($path);
+            return;
+        }
         $directoryIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
         $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $file) {
             if ($file->isDir()) {
                 self::rmdir_recursive($file->getPathname());
             } else {
+                chmod($file->getPathname(), 0666);
                 unlink($file->getPathname());
             }
         }
+        chmod($path, 0775);
         rmdir($path);
+    }
+
+    protected function disableErrorHandling($skippedErrno, $skippedErrstr)
+    {
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($skippedErrno, $skippedErrstr) {
+            // skip not needed warning, notice or errors
+            return (bool)($errno == $skippedErrno && stristr($errstr, $skippedErrstr));
+        });
+    }
+
+    protected function enableErrorHandling()
+    {
+        restore_error_handler();
     }
 }
