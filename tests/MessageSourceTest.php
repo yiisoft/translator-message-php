@@ -168,7 +168,7 @@ final class MessageSourceTest extends TestCase
         $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
         $translationFile = $this->path . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . 'category.php';
 
-        $this->disableErrorHandling(2, 'file_put_contents(' . $translationFile . '): failed to open stream: Permission denied');
+        $this->disableErrorHandling(2, 'failed to open stream: Permission denied');
 
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Can not write to ' . $translationFile);
@@ -181,7 +181,7 @@ final class MessageSourceTest extends TestCase
         $messageSource = new MessageSource($this->path);
         $messageSource->write('category', $locale, []);
 
-        chmod($this->path . DIRECTORY_SEPARATOR . $locale, 0755);
+        chmod($this->path . DIRECTORY_SEPARATOR . $locale, 0775);
         chmod($translationFile, 0666);
 
         $this->enableErrorHandling();
@@ -212,7 +212,7 @@ final class MessageSourceTest extends TestCase
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($skippedErrno, $skippedErrstr) {
             // skip not needed warning, notice or errors
-            return (bool)($errno == $skippedErrno && $errstr == $skippedErrstr);
+            return (bool)($errno == $skippedErrno && strstr($errstr, $skippedErrstr));
         });
     }
 
