@@ -227,4 +227,23 @@ final class MessageSourceTest extends TestCase
     {
         restore_error_handler();
     }
+
+    /**
+     * @dataProvider generateTranslationsData
+     */
+    public function testReadMessages(string $category, string $locale, array $data): void
+    {
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid();
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write($category, $locale, $data);
+
+        // Removing comments from reference messages.
+        $referenceMessages = array_map(function ($elem) {
+            return ['message' => $elem['message']];
+        }, $data);
+
+        $messages = $messageSource->getMessages($category, $locale);
+        $this->assertEquals($messages, $referenceMessages);
+    }
 }
