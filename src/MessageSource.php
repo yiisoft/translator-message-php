@@ -29,6 +29,20 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $this->messages[$category][$locale][$id] ?? null;
     }
 
+    public function getMessages(string $category, string $locale): array
+    {
+        if (!isset($this->messages[$category][$locale])) {
+            $this->read($category, $locale);
+        }
+
+        $messages = $this->messages[$category][$locale] ?? [];
+        foreach ($messages as &$message) {
+            $message = ['message' => $message];
+        }
+
+        return $messages;
+    }
+
     private function getFilePath(string $category, string $locale, bool $withCreateDir = false): string
     {
         $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
