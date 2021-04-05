@@ -233,7 +233,9 @@ final class MessageSourceTest extends TestCase
         $messageSource->write($category, $locale, $data);
 
         // Removing comments from reference messages.
-        $referenceMessages = array_map(function($elem) {return ['message' => $elem['message']];}, $data);
+        $referenceMessages = array_map(function ($elem) {
+            return ['message' => $elem['message']];
+        }, $data);
 
         $messages = $messageSource->getMessages($category, $locale);
         $this->assertEquals($messages, $referenceMessages);
