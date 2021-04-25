@@ -40,9 +40,9 @@ use Yiisoft\Aliases\Aliases;
 return [
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
-        '__construct()' =>  [
-            fn (Aliases $aliases) => $aliases->get('@message')
-        ]
+        '__construct()' => [
+            fn (Aliases $aliases) => $aliases->get('@message'),
+        ],
     ],
 ];
 ```
@@ -51,9 +51,9 @@ return [
 ```php
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
-        '__construct()' =>  [
-            '/var/www/app/resourse/messages'
-        ]
+        '__construct()' => [
+            '/var/www/app/resourse/messages',
+        ],
     ],
 ```
 
