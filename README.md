@@ -26,7 +26,7 @@ composer require yiisoft/translator-message-php
 
 ## Configuration
 
-Example of config, if you not use package [`yiisoft/config`](http://github.com/yiisoft/config)
+In case you use [`yiisoft/config`](http://github.com/yiisoft/config), you will get configuration automatically. If not, the following DI container configuration is necessary:
 
 ```php
 <?php
