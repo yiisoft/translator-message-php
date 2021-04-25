@@ -24,6 +24,39 @@ The preferred way to install this package is through [Composer](https://getcompo
 composer require yiisoft/translator-message-php
 ```
 
+## Configuration
+
+Example of config, if you not use package [`yiisoft/config`](http://github.com/yiisoft/config)
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Yiisoft\Translator\MessageReaderInterface;
+use Yiisoft\Translator\Message\Php\MessageSource;
+use Yiisoft\Aliases\Aliases;
+
+return [
+    MessageReaderInterface::class => [
+        'class' => MessageSource::class,
+        '__construct()' =>  [
+            fn (Aliases $aliases) => $aliases->get('@message')
+        ]
+    ],
+];
+```
+
+**Note:**  You can use absolutely path to translation files, if you not use [`yiisoft/aliases`](https://github.com/yiisoft/aliases)
+```php
+    MessageReaderInterface::class => [
+        'class' => MessageSource::class,
+        '__construct()' =>  [
+            '/var/www/app/resourse/messages'
+        ]
+    ],
+```
+
 ## General usage
 
 The package is meant to be used with [`yiisoft/translator`](https://github.com/yiisoft/translator). The examples below
