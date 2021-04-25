@@ -11,6 +11,6 @@ return [
         'class' => MessageSource::class,
         '__construct()' => [
             fn (Aliases $aliases) => $aliases->get('@message')
-        ]
+        ],
     ],
 ];
