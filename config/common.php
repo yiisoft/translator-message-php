@@ -10,7 +10,7 @@ return [
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
         '__construct()' => [
-            fn(Aliases $aliases) => $aliases->get('@message')
+            fn (Aliases $aliases) => $aliases->get('@message')
         ]
     ],
 ];
