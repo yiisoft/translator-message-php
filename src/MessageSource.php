@@ -43,6 +43,17 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $messages;
     }
 
+    public function write(string $category, string $locale, array $messages): void
+    {
+        $content = $this->generateMessagesFileContent($messages);
+
+        $path = $this->getFilePath($category, $locale, true);
+
+        if (file_put_contents($path, $content, LOCK_EX) === false) {
+            throw new \RuntimeException('Can not write to ' . $path);
+        }
+    }
+
     private function getFilePath(string $category, string $locale, bool $withCreateDir = false): string
     {
         $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
@@ -69,17 +80,6 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         }
 
         $this->messages[$category][$locale] = $messages;
-    }
-
-    public function write(string $category, string $locale, array $messages): void
-    {
-        $content = $this->generateMessagesFileContent($messages);
-
-        $path = $this->getFilePath($category, $locale, true);
-
-        if (file_put_contents($path, $content, LOCK_EX) === false) {
-            throw new \RuntimeException('Can not write to ' . $path);
-        }
     }
 
     private function generateMessagesFileContent(array $messages): string
