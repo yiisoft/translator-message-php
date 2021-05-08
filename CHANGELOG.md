@@ -1,4 +1,4 @@
-# Yii translator PHP message storage Change Log
+# Yii Translator PHP Message Storage Change Log
 
 ## 1.0.0 under development
 
