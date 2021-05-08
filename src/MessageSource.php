@@ -16,6 +16,10 @@ use function is_string;
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
 {
     private string $path;
+
+    /**
+     * @psalm-var array<string, array<string, array<string, string>>>
+     */
     private array $messages = [];
 
     public function __construct(string $path)
@@ -42,10 +46,14 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         foreach ($messages as &$message) {
             $message = ['message' => $message];
         }
+        /** @psalm-var array<string, array<string, string>> $messages */
 
         return $messages;
     }
 
+    /**
+     * @psalm-param array<string, array<string, string>> $messages
+     */
     public function write(string $category, string $locale, array $messages): void
     {
         $content = $this->generateMessagesFileContent($messages);
@@ -78,6 +86,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
             if (!is_array($messages)) {
                 throw new RuntimeException('Invalid file format: ' . $path);
             }
+            /** @psalm-var array<string, string> $messages */
         } else {
             $messages = [];
         }
@@ -85,6 +94,9 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         $this->messages[$category][$locale] = $messages;
     }
 
+    /**
+     * @psalm-param array<string, array<string, string>> $messages
+     */
     private function generateMessagesFileContent(array $messages): string
     {
         $content = "<?php\nreturn ";
@@ -99,6 +111,9 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         return $content;
     }
 
+    /**
+     * @psalm-param array<string, array<string, string>> $messages
+     */
     private function messagesToCode(array $messages): string
     {
         $code = '[';
@@ -107,11 +122,13 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
                 throw new InvalidArgumentException("Message is not valid for ID \"$messageId\". \"message\" key is missing.");
             }
 
+            /** @psalm-suppress DocblockTypeContradiction */
             if (!is_string($messageData['message'])) {
                 throw new InvalidArgumentException("Message is not a string for ID \"$messageId\".");
             }
 
             if (array_key_exists('comment', $messageData)) {
+                /** @psalm-suppress DocblockTypeContradiction */
                 if (!is_string($messageData['comment'])) {
                     throw new InvalidArgumentException("Message comment is not a string for ID \"$messageId\".");
                 }
