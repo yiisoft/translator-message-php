@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Yiisoft\Translator\Message\Php;
 
 use InvalidArgumentException;
+use RuntimeException;
 use Yiisoft\Translator\MessageReaderInterface;
 use Yiisoft\Translator\MessageWriterInterface;
+
 use function array_key_exists;
+use function is_array;
 use function is_string;
 
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
@@ -50,7 +53,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         $path = $this->getFilePath($category, $locale, true);
 
         if (file_put_contents($path, $content, LOCK_EX) === false) {
-            throw new \RuntimeException('Can not write to ' . $path);
+            throw new RuntimeException('Can not write to ' . $path);
         }
     }
 
@@ -58,7 +61,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
     {
         $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
         if ($withCreateDir && !file_exists($filePath) && !mkdir($filePath, 0775, true) && !is_dir($filePath)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $filePath));
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $filePath));
         }
         $filePath .= DIRECTORY_SEPARATOR . $category . '.php';
 
@@ -72,8 +75,8 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
         if (is_file($path)) {
             $messages = include $path;
 
-            if (!\is_array($messages)) {
-                throw new \RuntimeException('Invalid file format: ' . $path);
+            if (!is_array($messages)) {
+                throw new RuntimeException('Invalid file format: ' . $path);
             }
         } else {
             $messages = [];
