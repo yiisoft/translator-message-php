@@ -79,6 +79,32 @@ final class MessageSourceTest extends TestCase
         ];
     }
 
+    public function generateTranslationsDataWithQuotes(): array
+    {
+        return [
+            [
+                'app',
+                'de',
+                [
+                    'test\'.id1' => [
+                        'message' => 'app: \'Test 1\' on the (de)',
+                        'comment' => 'Translate \'wisely!',
+                    ],
+                    'test.\'id2\'' => [
+                        'message' => 'app: Test 1\' on the (de)',
+                        'comment' => 'Translate \'wisely!',
+                    ],
+                    'test."id3' => [
+                        'message' => 'app: "Test 2" on the (de)',
+                    ],
+                    'test."id4"' => [
+                        'message' => 'app: Test 3" on the (de)',
+                    ],
+                ],
+            ],
+        ];
+    }
+
     protected function tearDown(): void
     {
         $this->cleanFiles();
@@ -245,5 +271,19 @@ final class MessageSourceTest extends TestCase
 
         $messages = $messageSource->getMessages($category, $locale);
         $this->assertEquals($messages, $referenceMessages);
+    }
+
+    /**
+     * @dataProvider generateTranslationsDataWithQuotes
+     */
+    public function testWriteQuotedString(string $category, string $locale, array $data): void
+    {
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid();
+
+        $messageSource = new MessageSource($this->path);
+        $messageSource->write($category, $locale, $data);
+        foreach ($data as $id => $value) {
+            $this->assertEquals($messageSource->getMessage($id, $category, $locale), $value['message']);
+        }
     }
 }

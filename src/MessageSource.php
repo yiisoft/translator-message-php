@@ -137,9 +137,9 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
             }
 
             $code .= "\n" . '    ';
-            $code .= "'{$messageId}'";
+            $code .= var_export($messageId, true);
             $code .= ' => ';
-            $code .= "'{$messageData['message']}'";
+            $code .= var_export($messageData['message'], true);
             $code .= ',';
         }
         $code .= "\n" . ']';
