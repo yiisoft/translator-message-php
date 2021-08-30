@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Yiisoft\Translator\MessageReaderInterface;
 use Yiisoft\Translator\Message\Php\MessageSource;
 use Yiisoft\Aliases\Aliases;
-use Yiisoft\Factory\Definition\DynamicReference;
+use Yiisoft\Definitions\DynamicReference;
 
 return [
     MessageReaderInterface::class => [
