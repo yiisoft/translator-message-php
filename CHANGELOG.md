@@ -1,7 +1,7 @@
 # Yii Translator PHP Message Storage Change Log
 
 
-## 1.0.2 under development
+## 1.0.2 September 07, 2021
 
 - Bug: Fix DynamicReference namespace (samark)
 
