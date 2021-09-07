@@ -3,8 +3,7 @@
 
 ## 1.0.2 under development
 
-- no changes in this release.
-
+- Bug: Fix DynamicReference namespace (samark)
 
 ## 1.0.1 June 21, 2021
 
