@@ -3,8 +3,7 @@
 
 ## 1.0.3 under development
 
-- no changes in this release.
-
+- Bug #31: Validate locale in file path (darkdef) 
 
 ## 1.0.2 September 07, 2021
 

@@ -176,6 +176,19 @@ final class MessageSourceTest extends TestCase
         $this->assertNull($messageSource->getMessage('test', 'category', 'locale'));
     }
 
+    public function testReadWithIncorrectLocale(): void
+    {
+        $locale = '$%&';
+        $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(sprintf('Invalid locale code: "%s".', $locale));
+
+        $messageSource = new MessageSource($this->path);
+
+        $messageSource->getMessage('test', 'category', $locale);
+    }
+
     public function testCannotCreateDirectory(): void
     {
         $locale = 'test_locale';
@@ -245,7 +258,7 @@ final class MessageSourceTest extends TestCase
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($skippedErrno, $skippedErrstr) {
             // skip not needed warning, notice or errors
-            return (bool)($errno == $skippedErrno && stristr($errstr, $skippedErrstr));
+            return (bool)($errno == $skippedErrno && stripos($errstr, $skippedErrstr) !== false);
         });
     }
 
