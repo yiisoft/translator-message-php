@@ -67,6 +67,10 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
 
     private function getFilePath(string $category, string $locale, bool $withCreateDir = false): string
     {
+        if ($locale !== '' && !preg_match('/^[a-z_-]+$/i', $locale)) {
+            throw new InvalidArgumentException(sprintf('Invalid locale code: "%s".', $locale));
+        }
+
         $filePath = $this->path . DIRECTORY_SEPARATOR . $locale;
         if ($withCreateDir && !file_exists($filePath) && !mkdir($filePath, 0775, true) && !is_dir($filePath)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $filePath));
