@@ -1,6 +1,11 @@
 # Yii Translator PHP Message Storage Change Log
 
 
+## 1.0.4 under development
+
+- no changes in this release.
+
+
 ## 1.0.3 October 18, 2021
 
 - Bug #31: Validate locale in file path (darkdef)
