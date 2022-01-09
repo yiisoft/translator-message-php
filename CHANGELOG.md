@@ -3,8 +3,7 @@
 
 ## 1.0.4 under development
 
-- no changes in this release.
-
+- Bug #34: Added support of language codes with digits (darkdef)
 
 ## 1.0.3 October 18, 2021
 
