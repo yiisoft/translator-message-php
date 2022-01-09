@@ -45,13 +45,13 @@ final class MessageSourceTest extends TestCase
             ],
             [
                 'app',
-                'en-123',
+                'en-150',
                 [
                     'test.id1' => [
-                        'message' => 'app: Test 1 on the (en-123)',
+                        'message' => 'app: Test 1 on the (en-150)',
                     ],
                     'test.id2' => [
-                        'message' => 'app: Test 2 on the (en-123)',
+                        'message' => 'app: Test 2 on the (en-150)',
                     ],
                 ],
             ],
