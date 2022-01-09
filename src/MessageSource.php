@@ -67,7 +67,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
 
     private function getFilePath(string $category, string $locale, bool $withCreateDir = false): string
     {
-        if ($locale !== '' && !preg_match('/^[a-z_-]+$/i', $locale)) {
+        if ($locale !== '' && !preg_match('/^[a-z0-9_-]+$/i', $locale)) {
             throw new InvalidArgumentException(sprintf('Invalid locale code: "%s".', $locale));
         }
 
