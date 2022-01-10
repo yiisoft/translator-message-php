@@ -1,7 +1,7 @@
 # Yii Translator PHP Message Storage Change Log
 
 
-## 1.0.4 under development
+## 1.0.4 January 10, 2022
 
 - Bug #34: Added support of language codes with digits (darkdef)
 
