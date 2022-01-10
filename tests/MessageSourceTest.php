@@ -43,6 +43,18 @@ final class MessageSourceTest extends TestCase
                     ],
                 ],
             ],
+            [
+                'app',
+                'en-150',
+                [
+                    'test.id1' => [
+                        'message' => 'app: Test 1 on the (en-150)',
+                    ],
+                    'test.id2' => [
+                        'message' => 'app: Test 2 on the (en-150)',
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -176,9 +188,11 @@ final class MessageSourceTest extends TestCase
         $this->assertNull($messageSource->getMessage('test', 'category', 'locale'));
     }
 
-    public function testReadWithIncorrectLocale(): void
+    /**
+     * @dataProvider invalidLocalesData
+     */
+    public function testReadWithIncorrectLocale(string $locale): void
     {
-        $locale = '$%&';
         $this->path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'translate_tests' . uniqid('', true);
 
         $this->expectException(InvalidArgumentException::class);
@@ -187,6 +201,15 @@ final class MessageSourceTest extends TestCase
         $messageSource = new MessageSource($this->path);
 
         $messageSource->getMessage('test', 'category', $locale);
+    }
+
+    public function invalidLocalesData(): array
+    {
+        return [
+            ['$%&',],
+            ['як9',],
+            ['(9a)',],
+        ];
     }
 
     public function testCannotCreateDirectory(): void
