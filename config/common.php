@@ -11,7 +11,7 @@ return [
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
         '__construct()' => [
-            DynamicReference::to(static fn (Aliases $aliases) => $aliases->get('@message')),
+            DynamicReference::to(static fn (Aliases $aliases) => $aliases->get('@messages')),
         ],
     ],
 ];
