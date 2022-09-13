@@ -2,8 +2,7 @@
 
 ## 1.0.5 under development
 
-- no changes in this release.
-
+- Fix #36: Fix alias name in config (@rustamwin)
 
 ## 1.0.4 January 10, 2022
 
