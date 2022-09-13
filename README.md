@@ -59,7 +59,7 @@ return [
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
         '__construct()' => [
-            '/var/www/app/resourse/messages',
+            '/var/www/app/resources/messages',
         ],
     ],
 ```
