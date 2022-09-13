@@ -46,18 +46,20 @@ return [
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
         '__construct()' => [
-            DynamicReference::to(fn (Aliases $aliases) => $aliases->get('@message')),
+            DynamicReference::to(fn (Aliases $aliases) => $aliases->get('@messages')),
         ],
     ],
 ];
 ```
+
+> Make sure the `@messages` alias is in the `aliases` section of `$params` 
 
 **Note:**  You can use absolutely path to translation files, if you not use [`yiisoft/aliases`](https://github.com/yiisoft/aliases)
 ```php
     MessageReaderInterface::class => [
         'class' => MessageSource::class,
         '__construct()' => [
-            '/var/www/app/resourse/messages',
+            '/var/www/app/resources/messages',
         ],
     ],
 ```
