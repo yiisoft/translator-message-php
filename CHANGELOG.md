@@ -1,5 +1,9 @@
 # Yii Translator PHP Message Storage Change Log
 
+## 1.0.6 under development
+
+- no changes in this release.
+
 ## 1.0.5 September 13, 2022
 
 - Fix #36: Fix alias name in config (@rustamwin)
