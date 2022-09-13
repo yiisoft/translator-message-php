@@ -52,6 +52,8 @@ return [
 ];
 ```
 
+> Make sure the `@messages` alias is in the `aliases` section of `$params` 
+
 **Note:**  You can use absolutely path to translation files, if you not use [`yiisoft/aliases`](https://github.com/yiisoft/aliases)
 ```php
     MessageReaderInterface::class => [
