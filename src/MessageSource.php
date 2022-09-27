@@ -15,16 +15,13 @@ use function is_string;
 
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
 {
-    private string $path;
-
     /**
      * @psalm-var array<string, array<string, array<string, string>>>
      */
     private array $messages = [];
 
-    public function __construct(string $path)
+    public function __construct(private string $path)
     {
-        $this->path = $path;
     }
 
     public function getMessage(string $id, string $category, string $locale, array $parameters = []): ?string
