@@ -25,54 +25,32 @@ The package provides message storage backend based on PHP arrays to be used with
 
 The package could be installed with composer:
 
-```bash
-composer require yiisoft/translator-message-php --prefer-dist
-```
-
-## Configuration
-
-In case you use [`yiisoft/config`](http://github.com/yiisoft/config), you will get configuration automatically. If not, the following DI container configuration is necessary:
-
-```php
-<?php
-
-declare(strict_types=1);
-
-use Yiisoft\Translator\MessageReaderInterface;
-use Yiisoft\Translator\Message\Php\MessageSource;
-use Yiisoft\Aliases\Aliases;
-
-return [
-    MessageReaderInterface::class => [
-        'class' => MessageSource::class,
-        '__construct()' => [
-            DynamicReference::to(fn (Aliases $aliases) => $aliases->get('@messages')),
-        ],
-    ],
-];
-```
-
-> Make sure the `@messages` alias is in the `aliases` section of `$params` 
-
-**Note:**  You can use absolutely path to translation files, if you not use [`yiisoft/aliases`](https://github.com/yiisoft/aliases)
-```php
-    MessageReaderInterface::class => [
-        'class' => MessageSource::class,
-        '__construct()' => [
-            '/var/www/app/resources/messages',
-        ],
-    ],
+```shell
+composer require yiisoft/translator-message-php
 ```
 
 ## General usage
 
-The package is meant to be used with [`yiisoft/translator`](https://github.com/yiisoft/translator). The examples below
-are about using it separately.
+The package is meant to be used with [`yiisoft/translator`](https://github.com/yiisoft/translator):
+
+```php
+use Yiisoft\Translator\CategorySource;
+use Yiisoft\Translator\IntlMessageFormatter;
+use Yiisoft\Translator\Message\Php\MessageSource;
+
+$categorySource = new CategorySource(
+    'my-category',
+    new MessageSource('/path/to/messages'),
+    new IntlMessageFormatter(),
+);
+```
+
+The examples below are about using it separately.
 
 ### Create an instance of message source
 
 ```php
-/** @var string $path - path to your translations */
+/** @var string $path - full path to your translations */
 $messageSource = new \Yiisoft\Translator\Message\Php\MessageSource($path);
 ```
 
