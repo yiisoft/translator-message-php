@@ -277,7 +277,7 @@ final class MessageSourceTest extends TestCase
         rmdir($path);
     }
 
-    protected function disableErrorHandling($skippedErrno, $skippedErrstr)
+    protected function disableErrorHandling(int $skippedErrno, string $skippedErrstr): void
     {
         set_error_handler(
             static function ($errno, $errstr) use ($skippedErrno, $skippedErrstr) {
@@ -287,7 +287,7 @@ final class MessageSourceTest extends TestCase
         );
     }
 
-    protected function enableErrorHandling()
+    protected function enableErrorHandling(): void
     {
         restore_error_handler();
     }
