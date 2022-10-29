@@ -2,7 +2,7 @@
 
 ## 1.0.6 under development
 
-- Enh: Add composer require checker into CI
+- no changes in this release.
 
 ## 1.0.5 September 13, 2022
 
