@@ -304,7 +304,7 @@ final class MessageSourceTest extends TestCase
 
         // Removing comments from reference messages.
         $referenceMessages = array_map(
-            static fn($elem) => ['message' => $elem['message']],
+            static fn ($elem) => ['message' => $elem['message']],
             $data
         );
 
