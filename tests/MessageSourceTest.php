@@ -277,15 +277,17 @@ final class MessageSourceTest extends TestCase
         rmdir($path);
     }
 
-    protected function disableErrorHandling($skippedErrno, $skippedErrstr)
+    protected function disableErrorHandling(int $skippedErrno, string $skippedErrstr): void
     {
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($skippedErrno, $skippedErrstr) {
-            // skip not needed warning, notice or errors
-            return (bool)($errno == $skippedErrno && stripos($errstr, $skippedErrstr) !== false);
-        });
+        set_error_handler(
+            static function ($errno, $errstr) use ($skippedErrno, $skippedErrstr) {
+                // skip not needed warning, notice or errors
+                return $errno == $skippedErrno && stripos($errstr, $skippedErrstr) !== false;
+            }
+        );
     }
 
-    protected function enableErrorHandling()
+    protected function enableErrorHandling(): void
     {
         restore_error_handler();
     }
@@ -301,9 +303,10 @@ final class MessageSourceTest extends TestCase
         $messageSource->write($category, $locale, $data);
 
         // Removing comments from reference messages.
-        $referenceMessages = array_map(function ($elem) {
-            return ['message' => $elem['message']];
-        }, $data);
+        $referenceMessages = array_map(
+            static fn ($elem) => ['message' => $elem['message']],
+            $data
+        );
 
         $messages = $messageSource->getMessages($category, $locale);
         $this->assertEquals($messages, $referenceMessages);
