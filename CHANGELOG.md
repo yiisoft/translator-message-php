@@ -2,6 +2,7 @@
 
 ## 1.0.6 under development
 
+- Chg #42: Remove package configuration (@vjik)
 - Enh #40: Raise minimum PHP version to `^8.0` (@vjik, @xepozz)
 
 ## 1.0.5 September 13, 2022
