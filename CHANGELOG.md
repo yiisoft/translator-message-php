@@ -4,6 +4,7 @@
 
 - Chg #42: Remove package configuration (@vjik)
 - Enh #40: Raise minimum PHP version to `^8.0` (@vjik, @xepozz)
+- Enh #43: Add support for `yiisoft/translator` version `^2.0` (@vjik)
 
 ## 1.0.5 September 13, 2022
 
