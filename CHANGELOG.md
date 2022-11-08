@@ -1,6 +1,6 @@
 # Yii Translator PHP Message Storage Change Log
 
-## 1.0.6 under development
+## 1.1.0 November 08, 2022
 
 - Chg #42: Remove package configuration (@vjik)
 - Enh #40: Raise minimum PHP version to `^8.0` (@vjik, @xepozz)
