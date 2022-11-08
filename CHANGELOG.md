@@ -1,5 +1,9 @@
 # Yii Translator PHP Message Storage Change Log
 
+## 1.1.1 under development
+
+- no changes in this release.
+
 ## 1.1.0 November 08, 2022
 
 - Chg #42: Remove package configuration (@vjik)
