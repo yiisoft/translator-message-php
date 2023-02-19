@@ -1,5 +1,9 @@
 # Yii Translator PHP Message Storage Change Log
 
+## 1.1.2 under development
+
+- no changes in this release.
+
 ## 1.1.1 February 19, 2023
 
 - Enh #55: Add support of `yiisoft/translator` version `^3.0` (@vjik)
