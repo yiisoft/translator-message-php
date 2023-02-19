@@ -2,13 +2,13 @@
 
 ## 1.1.1 under development
 
-- no changes in this release.
+- Enh #55: Add support of `yiisoft/translator` version `^3.0` (@vjik)
 
 ## 1.1.0 November 08, 2022
 
 - Chg #42: Remove package configuration (@vjik)
 - Enh #40: Raise minimum PHP version to `^8.0` (@vjik, @xepozz)
-- Enh #43: Add support for `yiisoft/translator` version `^2.0` (@vjik)
+- Enh #43: Add support of `yiisoft/translator` version `^2.0` (@vjik)
 
 ## 1.0.5 September 13, 2022
 
