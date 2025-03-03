@@ -6,8 +6,8 @@
     <br>
 </p>
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/translator-message-php/v/stable.png)](https://packagist.org/packages/yiisoft/translator-message-php)
-[![Total Downloads](https://poser.pugx.org/yiisoft/translator-message-php/downloads.png)](https://packagist.org/packages/yiisoft/translator-message-php)
+[![Latest Stable Version](https://poser.pugx.org/yiisoft/translator-message-php/v)](https://packagist.org/packages/yiisoft/translator-message-php)
+[![Total Downloads](https://poser.pugx.org/yiisoft/translator-message-php/downloads)](https://packagist.org/packages/yiisoft/translator-message-php)
 [![Build status](https://github.com/yiisoft/translator-message-php/workflows/build/badge.svg)](https://github.com/yiisoft/translator-message-php/actions?query=workflow%3Abuild)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yiisoft/translator-message-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/translator-message-php/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/yiisoft/translator-message-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/yiisoft/translator-message-php/?branch=master)
