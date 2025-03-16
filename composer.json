@@ -29,16 +29,16 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "yiisoft/translator": "^1.0|^2.0|^3.0"
+        "php": "8.0 - 8.4",
+        "yiisoft/translator": "1.0 - 3.0"
     },
     "require-dev": {
-        "maglnet/composer-require-checker": "^4.2",
-        "phpunit/phpunit": "^9.5",
-        "rector/rector": "^1.0.0",
-        "roave/infection-static-analysis-plugin": "^1.16",
-        "spatie/phpunit-watcher": "^1.23",
-        "vimeo/psalm": "^4.30|^5.4"
+        "maglnet/composer-require-checker": "^4.4",
+        "phpunit/phpunit": "^9.6.22",
+        "rector/rector": "^2.0.10",
+        "roave/infection-static-analysis-plugin": "^1.25",
+        "spatie/phpunit-watcher": "^1.23.6",
+        "vimeo/psalm": "^4.30 || ^5.26.1 || ^6.8.9"
     },
     "autoload": {
         "psr-4": {
@@ -48,11 +48,6 @@
     "autoload-dev": {
         "psr-4": {
             "Yiisoft\\Translator\\Message\\Php\\Tests\\": "tests"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "3.0.x-dev"
         }
     },
     "config": {
