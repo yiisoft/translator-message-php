@@ -18,7 +18,7 @@ The package provides message storage backend based on PHP arrays to be used with
 
 ## Requirements
 
-- PHP 8.0 or higher.
+- PHP 8.0 - 8.5.
 
 ## Installation
 
