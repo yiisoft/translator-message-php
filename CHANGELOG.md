@@ -1,6 +1,6 @@
 # Yii Translator PHP Message Storage Change Log
 
-## 1.1.2 under development
+## 1.1.2 December 06, 2025
 
 - Chg #69, #70: Change PHP constraint in `composer.json` to `8.0 - 8.5` (@vjik)
 - Bug #71: Fix `yiisoft/translator` version constraint in `composer.json` that prevents using Yii Translator versions
