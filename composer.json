@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": "8.0 - 8.4",
-        "yiisoft/translator": "1.0 - 3.0"
+        "yiisoft/translator": "1.0 - 3"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^4.4",
