@@ -3,7 +3,6 @@
 ## 1.1.2 under development
 
 - Chg #69, #70: Change PHP constraint in `composer.json` to `8.0 - 8.5` (@vjik)
-- Chg #69: Change PHP constraint in `composer.json` to `8.0 - 8.4` (@vjik)
 - Bug #71: Fix `yiisoft/translator` version constraint in `composer.json` that prevents using Yii Translator versions
   higher than 3.0.0 (@vjik)
 
