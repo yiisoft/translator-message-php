@@ -12,6 +12,10 @@ use Yiisoft\Translator\MessageWriterInterface;
 use function array_key_exists;
 use function is_array;
 use function is_string;
+use function sprintf;
+
+use const DIRECTORY_SEPARATOR;
+use const LOCK_EX;
 
 final class MessageSource implements MessageReaderInterface, MessageWriterInterface
 {
@@ -20,9 +24,7 @@ final class MessageSource implements MessageReaderInterface, MessageWriterInterf
      */
     private array $messages = [];
 
-    public function __construct(private string $path)
-    {
-    }
+    public function __construct(private string $path) {}
 
     public function getMessage(string $id, string $category, string $locale, array $parameters = []): ?string
     {

@@ -7,10 +7,23 @@ namespace Yiisoft\Translator\Tests;
 use PHPUnit\Framework\TestCase;
 use Yiisoft\Translator\Message\Php\MessageSource;
 use InvalidArgumentException;
+use FilesystemIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RuntimeException;
+
+use function sprintf;
+
+use const DIRECTORY_SEPARATOR;
 
 final class MessageSourceTest extends TestCase
 {
     private string $path;
+
+    protected function tearDown(): void
+    {
+        $this->cleanFiles();
+    }
 
     public function generateTranslationsData(): array
     {
@@ -117,11 +130,6 @@ final class MessageSourceTest extends TestCase
         ];
     }
 
-    protected function tearDown(): void
-    {
-        $this->cleanFiles();
-    }
-
     /**
      * @dataProvider generateTranslationsData
      */
@@ -219,7 +227,7 @@ final class MessageSourceTest extends TestCase
 
         $this->disableErrorHandling(2, 'mkdir(): ');
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Directory "' . $this->path . DIRECTORY_SEPARATOR . $locale . '" was not created');
 
         file_put_contents($this->path, '');
@@ -238,7 +246,7 @@ final class MessageSourceTest extends TestCase
 
         $this->disableErrorHandling(2, 'failed to open stream: Permission denied');
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Can not write to ' . $translationFile);
 
         $messageSource = new MessageSource($this->path);
@@ -250,46 +258,6 @@ final class MessageSourceTest extends TestCase
         $messageSource->write('category', $locale, []);
 
         $this->enableErrorHandling();
-    }
-
-    private function cleanFiles(): void
-    {
-        if (file_exists($this->path)) {
-            self::rmdir_recursive($this->path);
-        }
-    }
-
-    private static function rmdir_recursive(string $path): void
-    {
-        if (is_file($path)) {
-            chmod($path, 0666);
-            unlink($path);
-            return;
-        }
-
-        $directoryIterator = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
-        $iterator = new \RecursiveIteratorIterator($directoryIterator, \RecursiveIteratorIterator::CHILD_FIRST);
-        foreach ($iterator as $file) {
-            self::rmdir_recursive($file->getPathname());
-        }
-
-        chmod($path, 0775);
-        rmdir($path);
-    }
-
-    protected function disableErrorHandling(int $skippedErrno, string $skippedErrstr): void
-    {
-        set_error_handler(
-            static function ($errno, $errstr) use ($skippedErrno, $skippedErrstr) {
-                // skip not needed warning, notice or errors
-                return $errno == $skippedErrno && stripos($errstr, $skippedErrstr) !== false;
-            }
-        );
-    }
-
-    protected function enableErrorHandling(): void
-    {
-        restore_error_handler();
     }
 
     /**
@@ -304,8 +272,8 @@ final class MessageSourceTest extends TestCase
 
         // Removing comments from reference messages.
         $referenceMessages = array_map(
-            static fn ($elem) => ['message' => $elem['message']],
-            $data
+            static fn($elem) => ['message' => $elem['message']],
+            $data,
         );
 
         $messages = $messageSource->getMessages($category, $locale);
@@ -324,5 +292,45 @@ final class MessageSourceTest extends TestCase
         foreach ($data as $id => $value) {
             $this->assertEquals($messageSource->getMessage($id, $category, $locale), $value['message']);
         }
+    }
+
+    protected function disableErrorHandling(int $skippedErrno, string $skippedErrstr): void
+    {
+        set_error_handler(
+            static function ($errno, $errstr) use ($skippedErrno, $skippedErrstr) {
+                // skip not needed warning, notice or errors
+                return $errno == $skippedErrno && stripos($errstr, $skippedErrstr) !== false;
+            },
+        );
+    }
+
+    protected function enableErrorHandling(): void
+    {
+        restore_error_handler();
+    }
+
+    private function cleanFiles(): void
+    {
+        if (file_exists($this->path)) {
+            self::rmdir_recursive($this->path);
+        }
+    }
+
+    private static function rmdir_recursive(string $path): void
+    {
+        if (is_file($path)) {
+            chmod($path, 0666);
+            unlink($path);
+            return;
+        }
+
+        $directoryIterator = new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS);
+        $iterator = new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::CHILD_FIRST);
+        foreach ($iterator as $file) {
+            self::rmdir_recursive($file->getPathname());
+        }
+
+        chmod($path, 0775);
+        rmdir($path);
     }
 }
