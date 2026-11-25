@@ -1,10 +1,10 @@
 # Yii Translator PHP Message Storage Change Log
 
-## 1.1.3 under development
+## 1.1.3 November 25, 2026
 
 - Chg #90: Replace Psalm with PHPStan (@vjik)
-- Enh #91: Add PHP 8.6 support (@vjik)
 - Enh #85: Explicitly import functions and constants in "use" section (@vjik)
+- Enh #91: Add PHP 8.6 support (@vjik)
 
 ## 1.1.2 December 06, 2025
 
