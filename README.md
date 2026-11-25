@@ -12,7 +12,6 @@
 [![Code Coverage](https://codecov.io/gh/yiisoft/translator-message-php/branch/master/graph/badge.svg)](https://codecov.io/gh/yiisoft/translator-message-php)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fyiisoft%2Ftranslator-message-php%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/yiisoft/translator-message-php/master)
 [![static analysis](https://github.com/yiisoft/translator-message-php/workflows/static%20analysis/badge.svg)](https://github.com/yiisoft/translator-message-php/actions?query=workflow%3A%22static+analysis%22)
-[![type-coverage](https://shepherd.dev/github/yiisoft/translator-message-php/coverage.svg)](https://shepherd.dev/github/yiisoft/translator-message-php)
 
 The package provides message storage backend based on PHP arrays to be used with [`yiisoft/translator`](https://github.com/yiisoft/translator) package.
 
