@@ -3,6 +3,7 @@
 ## 1.1.3 under development
 
 - Chg #90: Replace Psalm with PHPStan (@vjik)
+- Enh #91: Add PHP 8.6 support (@vjik)
 - Enh #85: Explicitly import functions and constants in "use" section (@vjik)
 
 ## 1.1.2 December 06, 2025

@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": "8.0 - 8.5",
+        "php": "8.0 - 8.6",
         "yiisoft/translator": "1.0 - 3"
     },
     "require-dev": {
