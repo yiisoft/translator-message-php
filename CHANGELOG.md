@@ -1,5 +1,9 @@
 # Yii Translator PHP Message Storage Change Log
 
+## 1.1.4 under development
+
+- no changes in this release.
+
 ## 1.1.3 November 25, 2026
 
 - Chg #90: Replace Psalm with PHPStan (@vjik)
